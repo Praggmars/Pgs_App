@@ -1,28 +1,60 @@
-package Program;
+package Program.ImageProgram;
 
-public class WebcamProgram extends Program {
-    @Override
-    public void Run() {
+import ProgramViewModel.ImageMenu.WebcamPVM;
+import javafx.animation.AnimationTimer;
+import org.opencv.videoio.VideoCapture;
 
+public class WebcamProgram extends ImageEditorBaseProgram {
+
+    private VideoCapture cammera;
+    private AnimationTimer timer;
+
+    public WebcamProgram() {
+        super();
+        viewModel = new WebcamPVM(this);
+        WebcamInit();
+    }
+
+    private void WebcamInit() {
+        cammera = new VideoCapture();
+        cammera.open(0);
+        cammera.read(originalImage);
+        ViewModel().SetImageViewSize(originalImage.cols(), originalImage.rows());
+        cammera.release();
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                cammera.read(originalImage);
+                ShowImage();
+            }
+        };
     }
 
     @Override
-    public void Pause() {
-
+    protected void RunProgram() {
+        cammera.open(0);
+        timer.start();
     }
 
     @Override
-    public void Resume() {
-
+    protected void PauseProgram() {
+        timer.stop();
+        cammera.release();
     }
 
     @Override
-    public void Close() {
-
+    protected void ResumeProgram() {
+        cammera.open(0);
+        timer.start();
     }
 
     @Override
-    public String Name() {
-        return "Webcam";
+    protected void CloseProgram() {
+        timer.stop();
+        cammera.release();
+    }
+
+    private WebcamPVM ViewModel(){
+        return (WebcamPVM)getViewModel();
     }
 }

@@ -1,28 +1,41 @@
-package Program;
+package Program.ImageProgram;
 
-public class ImageEditorProgram extends Program {
+import ProgramViewModel.ImageMenu.ImageEditorPVM;
+
+public class ImageEditorProgram extends ImageEditorBaseProgram {
+
+    public ImageEditorProgram() {
+        super();
+        viewModel = new ImageEditorPVM(this);
+    }
+
     @Override
-    public void Run() {
+    public void setEffect(ImageEffect effect){
+        super.setEffect(effect);
+        ShowImage();
+    }
+
+    @Override
+    protected void RunProgram() {
 
     }
 
     @Override
-    public void Pause() {
+    protected void PauseProgram() {
 
     }
 
     @Override
-    public void Resume() {
+    protected void ResumeProgram() {
 
     }
 
     @Override
-    public void Close() {
+    protected void CloseProgram() {
 
     }
 
-    @Override
-    public String Name() {
-        return "Image editor";
+    private ImageEditorPVM ViewModel(){
+        return (ImageEditorPVM)getViewModel();
     }
 }
