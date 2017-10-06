@@ -50,8 +50,8 @@ public abstract class ImageEditorBasePVM extends ProgramViewModel {
 
     public void SetImage(Image image){
         imageView.setImage(image);
-        imageView.setFitWidth(image.getWidth());
-        imageView.setFitHeight(image.getHeight());
+        imageView.setFitWidth(imgWidth);
+        imageView.setFitHeight(imgHeight);
     }
 
     public void SetImageViewSize(double width, double height){
