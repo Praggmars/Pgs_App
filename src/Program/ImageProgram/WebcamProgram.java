@@ -6,8 +6,26 @@ import org.opencv.videoio.VideoCapture;
 
 public class WebcamProgram extends ImageEditorBaseProgram {
 
+    ////////////////////////////////////////////////////////////////
+    //fields
+    ////////////////////////////////////////////////////////////////
+
     private VideoCapture cammera;
     private AnimationTimer timer;
+
+
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
+
+    private WebcamPVM ViewModel(){
+        return (WebcamPVM)getViewModel();
+    }
+
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
 
     public WebcamProgram() {
         super();
@@ -19,7 +37,7 @@ public class WebcamProgram extends ImageEditorBaseProgram {
         cammera = new VideoCapture();
         cammera.open(0);
         cammera.read(originalImage);
-        ViewModel().SetImageViewSize(originalImage.cols(), originalImage.rows());
+        ViewModel().setImageViewSize(originalImage.cols(), originalImage.rows());
         cammera.release();
         timer = new AnimationTimer() {
             @Override
@@ -52,9 +70,5 @@ public class WebcamProgram extends ImageEditorBaseProgram {
     protected void CloseProgram() {
         timer.stop();
         cammera.release();
-    }
-
-    private WebcamPVM ViewModel(){
-        return (WebcamPVM)getViewModel();
     }
 }

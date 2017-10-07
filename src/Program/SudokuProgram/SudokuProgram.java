@@ -7,10 +7,29 @@ import java.io.File;
 
 public class SudokuProgram extends Program {
 
+    ////////////////////////////////////////////////////////////////
+    //fields
+    ////////////////////////////////////////////////////////////////
+
     private Sudoku sudoku;
+
+
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
+
     public Sudoku getSudoku() {
         return sudoku;
     }
+
+    private SudokuPVM ViewModel(){
+        return (SudokuPVM)viewModel;
+    }
+
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
 
     public SudokuProgram(){
         sudoku = new Sudoku();
@@ -47,9 +66,5 @@ public class SudokuProgram extends Program {
 
     public void ClearSudoku() {
         sudoku.Clear();
-    }
-
-    private SudokuPVM ViewModel(){
-        return (SudokuPVM)viewModel;
     }
 }

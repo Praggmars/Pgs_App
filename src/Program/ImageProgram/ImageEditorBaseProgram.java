@@ -11,40 +11,50 @@ import java.io.ByteArrayInputStream;
 
 public abstract class ImageEditorBaseProgram extends Program {
 
+    ////////////////////////////////////////////////////////////////
+    //fields
+    ////////////////////////////////////////////////////////////////
+
     protected ImageEffect effect;
     protected Mat originalImage;
     protected Mat editedImage;
     protected MatOfByte buffer;
 
-    public ImageEditorBaseProgram() {
+
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
+
+    public void setEffect(ImageEffect effect){
+        this.effect = effect;
+    }
+
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
+
+    ImageEditorBaseProgram(){
         originalImage = new Mat();
         editedImage = new Mat();
         buffer = new MatOfByte();
         effect = ImageEffect.NORMAL;
     }
 
-    public void setEffect(ImageEffect effect){
-        this.effect = effect;
-    }
-
     public void ShowImage(){
         if (!originalImage.empty()) {
             effect.ApplyEffect(originalImage, editedImage);
-            ViewModel().SetImage(MatToImage());
+            ((ImageEditorBasePVM)viewModel).setImage(MatToImage());
         }
     }
 
     public void LoadImageFromFile(String path){
         originalImage = Imgcodecs.imread(path);
-        ViewModel().SetImageViewSize(originalImage.cols(), originalImage.rows());
+        ((ImageEditorBasePVM)viewModel).setImageViewSize(originalImage.cols(), originalImage.rows());
     }
 
     private Image MatToImage(){
         Imgcodecs.imencode(".png", editedImage, buffer);
         return new Image(new ByteArrayInputStream(buffer.toArray()));
-    }
-
-    private ImageEditorBasePVM ViewModel(){
-        return (ImageEditorBasePVM)getViewModel();
     }
 }

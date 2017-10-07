@@ -7,15 +7,20 @@ import java.io.Reader;
 
 public class Sudoku {
 
+    ////////////////////////////////////////////////////////////////
+    //fields
+    ////////////////////////////////////////////////////////////////
+
     private int[] numbers;
     private boolean[] prefillednums;
 
-    public int[] getNumbers(){
-        return numbers;
-    }
+
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
 
     public void setNumber(int x, int y, int value, boolean solving){
-        setNumber(getIndex(x, y), value, solving);
+        setNumber(IndexByXY(x, y), value, solving);
     }
     public void setNumber(int index, int value, boolean preFilled){
         if (value < 1 || value > 9){
@@ -28,7 +33,7 @@ public class Sudoku {
         }
     }
     public void setNumber(int x, int y, int value){
-        setNumber(getIndex(x, y), value);
+        setNumber(IndexByXY(x, y), value);
     }
     public void setNumber(int index, int value){
         if (value < 1 || value > 9){
@@ -40,27 +45,39 @@ public class Sudoku {
     }
 
     public int getNumber(int x, int y){
-        return numbers[getIndex(x, y)];
+        return numbers[IndexByXY(x, y)];
     }
     public int getNumber(int index){
         return numbers[index];
     }
 
     public boolean isPreFilled(int x, int y){
-        return prefillednums[getIndex(x, y)];
+        return prefillednums[IndexByXY(x, y)];
     }
     public boolean isPreFilled(int index){
         return prefillednums[index];
     }
 
-    private int getIndex(int x, int y){
-        return x+9*y;
-    }
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
 
     public Sudoku(){
         numbers = new int[81];
         prefillednums = new boolean[81];
         Clear();
+    }
+
+    public void Copyof(Sudoku other){
+        for (int i = 0; i < 81; i++){
+            numbers[i] = other.numbers[i];
+            prefillednums[i] = other.prefillednums[i];
+        }
+    }
+
+    private int IndexByXY(int x, int y){
+        return x+9*y;
     }
 
     public void Clear(){

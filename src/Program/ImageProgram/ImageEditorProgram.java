@@ -4,6 +4,19 @@ import ProgramViewModel.ImageMenu.ImageEditorPVM;
 
 public class ImageEditorProgram extends ImageEditorBaseProgram {
 
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
+
+    private ImageEditorPVM ViewModel(){
+        return (ImageEditorPVM)getViewModel();
+    }
+
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
+
     public ImageEditorProgram() {
         super();
         viewModel = new ImageEditorPVM(this);
@@ -33,9 +46,5 @@ public class ImageEditorProgram extends ImageEditorBaseProgram {
     @Override
     protected void CloseProgram() {
 
-    }
-
-    private ImageEditorPVM ViewModel(){
-        return (ImageEditorPVM)getViewModel();
     }
 }

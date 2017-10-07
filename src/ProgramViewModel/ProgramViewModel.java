@@ -9,21 +9,38 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 public abstract class ProgramViewModel {
 
+    ////////////////////////////////////////////////////////////////
+    //fields
+    ////////////////////////////////////////////////////////////////
+
     protected Program program;
     protected Tab tab;
-    protected Pane options;
+    private Pane optionsPlaceHolder;
     protected Pane optionMenu;
+    protected Pane display;
+
+
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
 
     public Program getProgram() {
         return program;
     }
+
     public Tab getTab() {
         return tab;
     }
+
+    public abstract String getName();
+
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
 
     public ProgramViewModel(Program program){
         this.program = program;
@@ -32,7 +49,7 @@ public abstract class ProgramViewModel {
         OptionSettings();
     }
 
-    protected void UIinit(){
+    private void UIinit(){
         tab = new Tab(getName());
         tab.setClosable(true);
         tab.setOnClosed(e->Pgs_App.App.CloseProgram(program));
@@ -42,7 +59,7 @@ public abstract class ProgramViewModel {
             else
                 program.Pause();
         });
-        options = Pgs_App.App.getOptionPane();
+        optionsPlaceHolder = Pgs_App.App.getOptionPane();
     }
 
     protected void AcceptDragAndDropFile(Node dst){
@@ -72,9 +89,7 @@ public abstract class ProgramViewModel {
     protected abstract void DisplaySettings();
 
     public void FillOptionMenu(){
-        options.getChildren().clear();
-        options.getChildren().add(optionMenu);
+        optionsPlaceHolder.getChildren().clear();
+        optionsPlaceHolder.getChildren().add(optionMenu);
     }
-
-    public abstract String getName();
 }

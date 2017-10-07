@@ -10,14 +10,39 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public abstract class ImageEditorBasePVM extends ProgramViewModel {
+
+    ////////////////////////////////////////////////////////////////
+    //fields
+    ////////////////////////////////////////////////////////////////
+
     protected ImageView imageView;
     protected ComboBox<ImageEffect> effectList;
-    protected Pane display;
     protected double imgWidth;
     protected double imgHeight;
 
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
 
-    public ImageEditorBasePVM(ImageEditorBaseProgram program){
+    public void setImage(Image image){
+        imageView.setImage(image);
+        imageView.setFitWidth(imgWidth);
+        imageView.setFitHeight(imgHeight);
+    }
+
+    public void setImageViewSize(double width, double height){
+        imgWidth = width;
+        imgHeight = height;
+        imageView.setFitWidth(imgWidth);
+        imageView.setFitHeight(imgHeight);
+    }
+
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
+
+    ImageEditorBasePVM(ImageEditorBaseProgram program){
         super(program);
     }
 
@@ -37,20 +62,7 @@ public abstract class ImageEditorBasePVM extends ProgramViewModel {
         tab.setContent(display);
         display.setOnScroll(e -> {
             double scale = e.getDeltaY() < 0 ? 1.0/1.1 : 1.1;
-            SetImageViewSize(imgWidth*scale, imgHeight*scale);
+            setImageViewSize(imgWidth*scale, imgHeight*scale);
         });
-    }
-
-    public void SetImage(Image image){
-        imageView.setImage(image);
-        imageView.setFitWidth(imgWidth);
-        imageView.setFitHeight(imgHeight);
-    }
-
-    public void SetImageViewSize(double width, double height){
-        imgWidth = width;
-        imgHeight = height;
-        imageView.setFitWidth(imgWidth);
-        imageView.setFitHeight(imgHeight);
     }
 }

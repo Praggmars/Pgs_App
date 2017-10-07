@@ -2,8 +2,8 @@ package Program.SudokuProgram;
 
 class SudokuSolver{
 
-    private boolean valid;
-    int emptyCell;
+    private boolean solvable;
+    int emptyCellCount;
     boolean changed;
     private SudokuCell[] grid;
     SudokuPart[] rows;
@@ -17,11 +17,11 @@ class SudokuSolver{
         CopyOf(sudoku);
     }
 
-    private SudokuSolver(SudokuSolver specimen){
-        CopyOf(specimen);
+    private SudokuSolver(SudokuSolver other){
+        CopyOf(other);
     }
 
-    private void SetUp(){
+    private void Init(){
         grid = new SudokuCell[81];
         rows = new SudokuPart[9];
         cols = new SudokuPart[9];
@@ -34,32 +34,32 @@ class SudokuSolver{
         for (int i = 0; i < 81; i++){
             grid[i] = new SudokuCell(i, this);
         }
-        emptyCell = 81;
-        valid = true;
+        emptyCellCount = 81;
+        solvable = true;
     }
 
     private void CopyOf(Sudoku sudoku){
         this.sudoku = sudoku;
-        SetUp();
+        Init();
         for (int i = 0; i < 81; i++){
-            valid &= grid[i].GiveValue(sudoku.getNumber(i));
+            solvable &= grid[i].GiveValue(sudoku.getNumber(i));
         }
     }
 
-    private void CopyOf(SudokuSolver specimen){
-        sudoku = specimen.sudoku;
-        SetUp();
+    private void CopyOf(SudokuSolver other){
+        sudoku = other.sudoku;
+        Init();
         for (int i = 0; i < 81; i++){
-            grid[i].CopyOf(specimen.grid[i]);
+            grid[i].CopyOf(other.grid[i]);
         }
         for (int i = 0; i < 9; i++){
-            rows[i].CopyOf(specimen.rows[i]);
-            cols[i].CopyOf(specimen.cols[i]);
-            squs[i].CopyOf(specimen.squs[i]);
+            rows[i].CopyOf(other.rows[i]);
+            cols[i].CopyOf(other.cols[i]);
+            squs[i].CopyOf(other.squs[i]);
         }
-        emptyCell = specimen.emptyCell;
-        valid = specimen.valid;
-        changed = specimen.changed;
+        emptyCellCount = other.emptyCellCount;
+        solvable = other.solvable;
+        changed = other.changed;
     }
 
     boolean Solve() {
@@ -71,10 +71,10 @@ class SudokuSolver{
     }
 
     private boolean SolveSudoku(){
-        if (!valid){
+        if (!solvable){
             return false;
         }
-        while (emptyCell != 0) {
+        while (emptyCellCount != 0) {
             changed = false;
             for (SudokuCell cell : grid){
                 if (!cell.Filled()){
@@ -194,7 +194,7 @@ class SudokuCell{
             row.included[value - 1] = true;
             col.included[value - 1] = true;
             squ.included[value - 1] = true;
-            sudoku.emptyCell--;
+            sudoku.emptyCellCount--;
         }
         return true;
     }
@@ -218,7 +218,7 @@ class SudokuCell{
                         col.included[i] = true;
                         squ.included[i] = true;
                         sudoku.changed = true;
-                        sudoku.emptyCell--;
+                        sudoku.emptyCellCount--;
                     }
                 }
             }

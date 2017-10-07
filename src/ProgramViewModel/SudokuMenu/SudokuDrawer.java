@@ -5,7 +5,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class SudokuDrawer {
+class SudokuDrawer {
+
+    ////////////////////////////////////////////////////////////////
+    //fields
+    ////////////////////////////////////////////////////////////////
 
     private Sudoku sudoku;
 
@@ -17,7 +21,12 @@ public class SudokuDrawer {
     private boolean numSelection;
     private double numsize;
 
-    public SudokuDrawer(Sudoku sudoku){
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
+
+    SudokuDrawer(Sudoku sudoku){
         selectedx = -1;
         selectedy  = -1;
         numSelection = false;
@@ -25,7 +34,7 @@ public class SudokuDrawer {
         this.sudoku = sudoku;
     }
 
-    public void ClickEvent(double x, double y){
+    void ClickEvent(double x, double y){
         if (numSelection) {
             if (x > lastx && x < lastx + 3 * numsize && y > lasty && y < lasty + 4 * numsize){
                 int number = (int)(x - lastx) / (int)numsize + (int)(y - lasty) / (int)numsize * 3 + 1;
@@ -54,18 +63,18 @@ public class SudokuDrawer {
         numSelection = !numSelection;
     }
 
-    public void ClickedSudoku(int x, int y){
+    private void ClickedSudoku(int x, int y){
         selectedx = x;
         selectedy = y;
     }
 
-    public void TypedNumber(int number){
+    private void TypedNumber(int number){
         if (selectedx >= 0 && selectedy >= 0){
             sudoku.setNumber(selectedx, selectedy, number, number == 0);
         }
     }
 
-    public void Draw(GraphicsContext graphicsContext){
+    void Draw(GraphicsContext graphicsContext){
         DrawBackground(graphicsContext);
         DrawNumbers(graphicsContext);
         if (numSelection)

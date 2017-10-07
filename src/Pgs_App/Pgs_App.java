@@ -18,6 +18,9 @@ import java.util.List;
 
 public class Pgs_App extends Application {
 
+    ////////////////////////////////////////////////////////////////
+    //fields
+    ////////////////////////////////////////////////////////////////
     public static Pgs_App App;
 
     private Stage window;
@@ -28,10 +31,14 @@ public class Pgs_App extends Application {
 
     private BorderPane container;
     private TabPane runningProgramTabs;
-    private SingleSelectionModel tabSelection;
+    private SingleSelectionModel<Tab> tabSelection;
     private Pane optionPane;
     private Pane secondaryProgramPane;
 
+
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
     public Pane getOptionPane() {
         return optionPane;
     }
@@ -39,6 +46,13 @@ public class Pgs_App extends Application {
     public Stage getWindow() {
         return window;
     }
+
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
+
+    //program menu registration
 
     private void RegisterMainMenu(){
         Menu mainMenu = new Menu("Menu");
@@ -82,6 +96,8 @@ public class Pgs_App extends Application {
         RegisterMenus();
     }
 
+    //program opening and closing
+
     public void OpenProgram(Program program){
         programList.add(program);
         Tab tab = program.getViewModel().getTab();
@@ -94,6 +110,8 @@ public class Pgs_App extends Application {
         program.Close();
         programList.remove(program);
     }
+
+    //setting up application
 
     @Override
     public void start(Stage primaryStage) throws Exception {

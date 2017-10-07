@@ -15,14 +15,32 @@ import java.io.File;
 
 public class SudokuPVM extends ProgramViewModel {
 
-    private Pane display;
+    ////////////////////////////////////////////////////////////////
+    //fields
+    ////////////////////////////////////////////////////////////////
+
     private GraphicsContext graphicsContext;
 
     private SudokuDrawer sudokuDrawer;
 
+
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
+
     private SudokuProgram Program(){
         return (SudokuProgram)program;
     }
+
+    @Override
+    public String getName() {
+        return "Sudoku";
+    }
+
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
 
     public SudokuPVM(Program program) {
         super(program);
@@ -73,10 +91,5 @@ public class SudokuPVM extends ProgramViewModel {
     protected void HandleDroppedFile(File file){
         Program().getSudoku().Load(file);
         sudokuDrawer.Draw(graphicsContext);
-    }
-
-    @Override
-    public String getName() {
-        return "Sudoku";
     }
 }

@@ -1,19 +1,31 @@
 package ProgramViewModel.ImageMenu;
 
 import Program.ImageProgram.ImageEditorProgram;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 
 import java.io.File;
 
 public class ImageEditorPVM extends ImageEditorBasePVM {
 
-    public ImageEditorPVM(ImageEditorProgram program){
-        super(program);
-    }
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
 
     private ImageEditorProgram Program(){
         return (ImageEditorProgram)program;
+    }
+
+    @Override
+    public String getName() {
+        return "Image editor";
+    }
+
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
+
+    public ImageEditorPVM(ImageEditorProgram program){
+        super(program);
     }
 
     @Override
@@ -31,11 +43,5 @@ public class ImageEditorPVM extends ImageEditorBasePVM {
     protected void HandleDroppedFile(File file){
         Program().LoadImageFromFile(file.getAbsolutePath());
         Program().ShowImage();
-    }
-
-
-    @Override
-    public String getName() {
-        return "Image editor";
     }
 }

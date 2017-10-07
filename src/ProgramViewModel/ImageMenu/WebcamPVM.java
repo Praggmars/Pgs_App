@@ -4,8 +4,12 @@ import Program.ImageProgram.WebcamProgram;
 
 public class WebcamPVM extends ImageEditorBasePVM {
 
-    public WebcamPVM(WebcamProgram program){
-        super(program);
+    ////////////////////////////////////////////////////////////////
+    //getters, setters
+    ////////////////////////////////////////////////////////////////
+
+    private WebcamProgram Program(){
+        return (WebcamProgram)program;
     }
 
     @Override
@@ -13,7 +17,12 @@ public class WebcamPVM extends ImageEditorBasePVM {
         return "Webcam";
     }
 
-    private WebcamProgram Program(){
-        return (WebcamProgram)program;
+
+    ////////////////////////////////////////////////////////////////
+    //methods
+    ////////////////////////////////////////////////////////////////
+
+    public WebcamPVM(WebcamProgram program){
+        super(program);
     }
 }
