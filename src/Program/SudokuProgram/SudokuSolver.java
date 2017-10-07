@@ -2,21 +2,17 @@ package Program.SudokuProgram;
 
 class SudokuSolver{
 
-    private boolean valid;  //megoldható-e
-    int emptyCell;  //üres cellák száma
-    boolean changed;    //változott-e
-    private SudokuCell[] grid;  //cellák
-    SudokuPart[] rows;  //sorok
-    SudokuPart[] cols;  //oszlopok
-    SudokuPart[] squs;  //négyzetek
+    private boolean valid;
+    int emptyCell;
+    boolean changed;
+    private SudokuCell[] grid;
+    SudokuPart[] rows;
+    SudokuPart[] cols;
+    SudokuPart[] squs;
 
     private Sudoku sudoku;
 
 
-    /**
-     * megoldó kitöltése sudoku alapján
-     * @param sudoku sudoku
-     */
     SudokuSolver(Sudoku sudoku){
         CopyOf(sudoku);
     }
@@ -74,14 +70,10 @@ class SudokuSolver{
         return false;
     }
 
-    /**
-     * megoldja a sudokut
-     */
     private boolean SolveSudoku(){
         if (!valid){
             return false;
         }
-        //amíg van kitöltetlen cella, addig dolgozik
         while (emptyCell != 0) {
             changed = false;
             for (SudokuCell cell : grid){
@@ -92,7 +84,6 @@ class SudokuSolver{
                 }
             }
             if (!changed) {
-                //ha nem történt változás, mással próbálkozik
                 return TryAgain();
             }
         }
@@ -145,7 +136,6 @@ class SudokuPart{
     boolean[] included;
 
 
-    //mezők létrehozása, inicializálás
     SudokuPart() {
         cells = new SudokuCell[9];
         included = new boolean[9];
@@ -160,13 +150,13 @@ class SudokuPart{
 }
 
 class SudokuCell{
-    int value;  //cella értéke, 0 ha kitöltetlen
-    int excludedNumber; //mennyi szám nem lehet benne
-    boolean[] excluded; //melyik számok nem lehetnek benne
-    private SudokuPart row; //sora
-    private SudokuPart col; //oszlopa
-    private SudokuPart squ; //négyzete
-    private SudokuSolver sudoku;    //sudokuja
+    int value;
+    int excludedNumber;
+    boolean[] excluded;
+    private SudokuPart row;
+    private SudokuPart col;
+    private SudokuPart squ;
+    private SudokuSolver sudoku;
 
 
 
@@ -191,12 +181,7 @@ class SudokuCell{
         System.arraycopy(specimen.excluded, 0, excluded, 0, 9);
     }
 
-    /**
-     * Értéket ad a cellának
-     * @param value Érték
-     */
     boolean GiveValue(int value){
-        //érvényes érték
         if (value > 0 && value <= 9){
             if (row.included[value - 1] || col.included[value - 1] || squ.included[value - 1]){
                 return false;
@@ -214,11 +199,6 @@ class SudokuCell{
         return true;
     }
 
-    /**
-     * Kizár egy értéket a lehetséges értékek közül
-     * @param value Kizárandó érték
-     * @return  Hamis, ha megoldhatatlan
-     */
     boolean ExcludeValue(int value) {
         if (value == 0)
             return true;
@@ -227,15 +207,12 @@ class SudokuCell{
         if (!excluded[value - 1]){
             excluded[value - 1] = true;
             excludedNumber++;
-            //ha csak egy szám lehetséges, azt beírja
             if (excludedNumber == 8){
                 for (int i = 0; i < 9; i++){
                     if (!excluded[i]){
-                        //ha nem lehet beírni, hiba
                         if (row.included[i] || col.included[i] || squ.included[i]){
                             return false;
                         }
-                        //beírás
                         this.value = i + 1;
                         row.included[i] = true;
                         col.included[i] = true;
@@ -249,11 +226,6 @@ class SudokuCell{
         return true;
     }
 
-    /**
-     * Megnézi, hogy milyen értékek nem lehetnek a cellában, kizárja ami nem lehet
-     * Ha egy érték lehetséges, beírja
-     * @return  Hamis, ha megoldhatatlan
-     */
     boolean Check() {
         for (int i = 0; i < 9; i++){
             if (!ExcludeValue(row.cells[i].value))
@@ -272,10 +244,6 @@ class SudokuCell{
         return true;
     }
 
-    /**
-     * Ki van-e töltve
-     * @return igaz, ha ki van töltve
-     */
     boolean Filled(){
         return value != 0;
     }
