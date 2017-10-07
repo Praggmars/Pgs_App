@@ -13,7 +13,6 @@ public abstract class ImageEditorBasePVM extends ProgramViewModel {
     protected ImageView imageView;
     protected ComboBox<ImageEffect> effectList;
     protected Pane display;
-    protected VBox optionMenu;
     protected double imgWidth;
     protected double imgHeight;
 
@@ -40,12 +39,6 @@ public abstract class ImageEditorBasePVM extends ProgramViewModel {
             double scale = e.getDeltaY() < 0 ? 1.0/1.1 : 1.1;
             SetImageViewSize(imgWidth*scale, imgHeight*scale);
         });
-    }
-
-    @Override
-    public void FillOptionMenu(){
-        options.getChildren().clear();
-        options.getChildren().add(optionMenu);
     }
 
     public void SetImage(Image image){

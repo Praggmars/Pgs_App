@@ -12,7 +12,7 @@ public abstract class Program {
         if (!started) {
             started = true;
             viewModel.FillOptionMenu();
-            ResumeProgram();
+            RunProgram();
         }
     }
     protected abstract void RunProgram();

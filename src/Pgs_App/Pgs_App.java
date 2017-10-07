@@ -3,6 +3,7 @@ package Pgs_App;
 import Program.*;
 import Program.ImageProgram.ImageEditorProgram;
 import Program.ImageProgram.WebcamProgram;
+import Program.SudokuProgram.SudokuProgram;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -35,6 +36,9 @@ public class Pgs_App extends Application {
         return optionPane;
     }
 
+    public Stage getWindow() {
+        return window;
+    }
 
     private void RegisterMainMenu(){
         Menu mainMenu = new Menu("Menu");
@@ -58,9 +62,19 @@ public class Pgs_App extends Application {
         imageMenu.getItems().add(webcam);
     }
 
+    private void RegisterSudokuMenu(){
+        Menu sudokuMenu = new Menu("Sudoku");
+        menuBar.getMenus().add(sudokuMenu);
+
+        MenuItem sudoku = new MenuItem("Sudoku");
+        sudoku.setOnAction(e->OpenProgram(new SudokuProgram()));
+        sudokuMenu.getItems().add(sudoku);
+    }
+
     private void RegisterMenus(){
         RegisterMainMenu();
         RegisterImageMenu();
+        RegisterSudokuMenu();
     }
 
     private void CreateMenu(){

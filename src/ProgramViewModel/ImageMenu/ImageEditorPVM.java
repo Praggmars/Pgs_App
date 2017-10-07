@@ -24,30 +24,15 @@ public class ImageEditorPVM extends ImageEditorBasePVM {
     @Override
     protected void DisplaySettings() {
         super.DisplaySettings();
-        AcceptDragAndDropFile();
+        AcceptDragAndDropFile(display);
     }
 
-    private void AcceptDragAndDropFile(){
-        display.setOnDragOver(e->{
-            Dragboard db = e.getDragboard();
-            if (db.hasFiles())
-                e.acceptTransferModes(TransferMode.COPY);
-            else
-                e.consume();
-        });
-        display.setOnDragDropped(e->{
-            Dragboard db = e.getDragboard();
-            if (db.hasFiles()){
-                for (File f : db.getFiles()) {
-                    String path = f.getAbsolutePath();
-                    Program().LoadImageFromFile(path);
-                    Program().ShowImage();
-                }
-            }
-            e.setDropCompleted(true);
-            e.consume();
-        });
+    @Override
+    protected void HandleDroppedFile(File file){
+        Program().LoadImageFromFile(file.getAbsolutePath());
+        Program().ShowImage();
     }
+
 
     @Override
     public String getName() {
